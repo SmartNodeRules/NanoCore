@@ -141,6 +141,11 @@ void setup()
   event = F("System#Boot");
   rulesProcessing('b', event);
   rulesProcessing('r', event);
+
+  // Setup another ISR routine, hitch hike on existing millis() ISR frequency
+  OCR0A = 0xAF;
+  TIMSK0 |= _BV(OCIE0A);
+
 }
 
 

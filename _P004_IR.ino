@@ -108,10 +108,6 @@ boolean Plugin_004(byte function, String& cmd, String& params)
           digitalWrite(PIN_IR_TX_DATA, LOW);
           digitalWrite(PIN_IR_RX_DATA, INPUT_PULLUP);
           attachInterrupt(1, P004_IR_ISR, CHANGE);
-
-          // Setup another ISR routine, hitch hike on existing millis() ISR frequency
-          OCR0A = 0xAF;
-          TIMSK0 |= _BV(OCIE0A);
           
           // Attach a handler extension to the millis() irq routine
           millisIRQCall_ptr = &P004_millis_irq;
