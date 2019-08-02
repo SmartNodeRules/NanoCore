@@ -1,3 +1,10 @@
+//********************************************************************************
+//  Misc routines
+//********************************************************************************
+
+//********************************************************************************
+// Check free memory
+//********************************************************************************
 int freeRam() {
    extern int __heap_start, *__brkval; 
    int v; 
@@ -15,9 +22,10 @@ int freeRam2() {
    return byteCounter;
  }
 
-/*********************************************************************************************\
-   Workaround for removing trailing white space when String() converts a float with 0 decimals
-  \*********************************************************************************************/
+
+//********************************************************************************
+//  Workaround for removing trailing white space when String() converts a float with 0 decimals
+//********************************************************************************
 String toString(float value, byte decimals)
 {
   String sValue = String(value, decimals);
@@ -25,9 +33,10 @@ String toString(float value, byte decimals)
   return sValue;
 }
 
-/********************************************************************************************\
-  Set numerical Uservar by name
-  \*********************************************************************************************/
+
+//********************************************************************************
+//  Set numerical Uservar by name
+//********************************************************************************
 void setNvar(String varName, float value, int decimals) {
   int pos = -1;
   for (byte x = 0; x < USER_VAR_MAX; x++) {
@@ -50,9 +59,10 @@ void setNvar(String varName, float value, int decimals) {
   }
 }
 
-/*********************************************************************************************\
-   Parse a string and get the xth command or parameter
-  \*********************************************************************************************/
+
+//********************************************************************************
+//  Parse a string and get the xth command or parameter
+//********************************************************************************
 String parseString(String& string, byte indexFind, char separator)
 {
   String tmpString = string;
@@ -75,9 +85,10 @@ String parseString(String& string, byte indexFind, char separator)
   return "";
 }
 
-/*********************************************************************************************\
-   Parse a string and get the xth command or parameter
-  \*********************************************************************************************/
+
+//********************************************************************************
+//  Parse a string and get the start position of the xth command or parameter
+//********************************************************************************
 int getParamStartPos(String& string, byte indexFind)
 {
   String tmpString = string;

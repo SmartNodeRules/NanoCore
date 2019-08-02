@@ -1,3 +1,11 @@
+//********************************************************************************
+//  Rule engine section
+//********************************************************************************
+
+
+//********************************************************************************
+//  List Rules to serial port
+//********************************************************************************
 void listRules(char section) {
   String rule = "";
 
@@ -25,6 +33,10 @@ void listRules(char section) {
   Serial.write(0); // to assist automated read/program, terminate with zero byte
 }
 
+
+//********************************************************************************
+//  Load Rules from serial port (also uses logic contained in serial section)
+//********************************************************************************
 void loadRules(char section, boolean clear) {
   if (section != 'b' && section != 'r'){
     loadEEPROM = false;
@@ -54,6 +66,7 @@ void loadRules(char section, boolean clear) {
   }
 }
 
+
 //********************************************************************************************
 //  Check rule timers
 //********************************************************************************************
@@ -75,6 +88,9 @@ void rulesTimers()
 }
 
 
+//********************************************************************************************
+//  Process an event
+//********************************************************************************************
 void rulesProcessing(char section, String& event) {
   unsigned long timer=millis();
   boolean match = false;
@@ -106,12 +122,6 @@ void rulesProcessing(char section, String& event) {
       rule += (char)data;
     else
     { // rule complete
-#if DEBUG
-Serial.print(F("Rule "));
-Serial.println(rule);
-Serial.print(F("R1 "));
-Serial.println(freeRam());
-#endif
       if(rule.indexOf('%') != -1)
         rule = parseTemplate(rule, rule.length());
       action = rule;
@@ -126,14 +136,6 @@ Serial.println(freeRam());
           if (split != -1)
             rule = rule.substring(0, split);
 
-#if DEBUG
-Serial.print(F("R2 "));
-Serial.println(freeRam());
-Serial.print(F("RE "));
-Serial.println(event);
-Serial.print(F("RR "));
-Serial.println(rule);
-#endif
           match = ruleMatch(event, rule);
           if (match) {
             isCommand = false;
@@ -153,18 +155,10 @@ Serial.println(rule);
         action.trim();
         action.replace(F("%event%"), event);
         if(Settings.Debug){
-#if DEBUG
-Serial.print(F("R3 "));
-Serial.println(freeRam());
-#endif
           Serial.print(F("ACT: "));
           Serial.println(action);
         }
         ExecuteCommand(action.c_str());
-#if DEBUG
-Serial.print(F("R4 "));
-Serial.println(freeRam());
-#endif
       }
       rule = "";
     } // rule processing
@@ -176,6 +170,9 @@ Serial.println(freeRam());
 }
 
 
+//********************************************************************************************
+//  Check if an event matches a specific rule
+//********************************************************************************************
 boolean ruleMatch(String& event, String& rule)
 {
   if (rule == "*")
@@ -190,12 +187,6 @@ boolean ruleMatch(String& event, String& rule)
     {
       tmpEvent = event.substring(0, pos);
       tmpRule = rule.substring(0, pos);
-#if DEBUG
-Serial.print(F("TRME "));
-Serial.println(tmpEvent);
-Serial.print(F("TRMR "));
-Serial.println(tmpRule);
-#endif
       return tmpEvent.equalsIgnoreCase(tmpRule);
     }
  return rule.equalsIgnoreCase(event);

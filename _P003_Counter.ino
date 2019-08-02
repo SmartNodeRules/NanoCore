@@ -3,6 +3,12 @@
 //#################################### Plugin 003 Counter ###############################################
 //#######################################################################################################
 
+/*
+ * Commands:
+ * counterSet <pin>                           Set an interrupt driven counter in input Ax (it uses the analog ports as digital counter)
+ * counterGet <var count>,<var time>,<pin>    Read the count value and elapsed time between two pulses
+*/
+
 #define PLUGIN_003
 #define PLUGIN_ID_003         3
 
@@ -119,6 +125,7 @@ inline void pulse_handle_interrupt()
     else
       PulseState[x] = 1;
   }
+  pulseLED = 1;
 }
 
 #if defined(PCINT1_vect)

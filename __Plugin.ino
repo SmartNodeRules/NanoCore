@@ -1040,9 +1040,9 @@ void PluginInit(void)
 }
 
 
-/*********************************************************************************************\
-* Function call to all or specific plugins
-\*********************************************************************************************/
+//********************************************************************************
+//  Function call to all or specific plugins
+//********************************************************************************
 byte PluginCall(byte Function, String& cmd, String& params)
 {
   int x;
@@ -1051,7 +1051,7 @@ byte PluginCall(byte Function, String& cmd, String& params)
   {
     // Unconditional calls to all plugins
     case PLUGIN_INIT:
-    case PLUGIN_UNCONDITIONAL_POLL:
+    case PLUGIN_100_PER_SECOND:
     case PLUGIN_TEN_PER_SECOND:
     case PLUGIN_ONCE_A_SECOND:
     case PLUGIN_INFO:

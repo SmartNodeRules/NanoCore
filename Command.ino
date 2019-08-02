@@ -1,12 +1,12 @@
+//********************************************************************************
+//  Serial and Rules command handler
+//********************************************************************************
+
 #define MAX_ARG_SIZE 40
 #define MAX_COMMAND_SIZE 20
 
 void ExecuteCommand(const char *Line)
 {
-#if DEBUG
-  Serial.print(F("C1 "));
-  Serial.println(freeRam());
-#endif
   // first check the plugins
   String cmd = Line;
   String params = "";
@@ -21,10 +21,6 @@ void ExecuteCommand(const char *Line)
   cmd = "";
   params = "";
 
-#if DEBUG
-  Serial.print("C2 ");
-  Serial.println(freeRam());
-#endif
   boolean success = false;
   char TmpStr1[MAX_ARG_SIZE + 2];
   TmpStr1[0] = 0;
@@ -60,6 +56,12 @@ void ExecuteCommand(const char *Line)
       }
     }
     String strLine = Line;
+  }
+
+  if (strcasecmp_P(Command, PSTR("ledPulse")) == 0)
+  {
+    success = true;
+    pulseLED = Par1;
   }
 
   if (strcasecmp_P(Command, PSTR("Echo")) == 0)
